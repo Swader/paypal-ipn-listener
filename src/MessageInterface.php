@@ -15,4 +15,9 @@ interface MessageInterface
      * @return array
      */
     public function getAll();
+
+	/**
+	 * @return string
+	 */
+	public function __toString();
 }
