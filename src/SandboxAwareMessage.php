@@ -2,7 +2,7 @@
 
 namespace Mdb\PayPal\Ipn;
 
-class Message implements MessageInterface
+class SandboxAwareMessage implements MessageInterface
 {
     /**
      * @var array
@@ -10,15 +10,22 @@ class Message implements MessageInterface
     private $data;
 
     /**
-     * @param array|string $data
+     * @var bool
      */
-    public function __construct($data)
+    private $usingSandbox;
+
+    /**
+     * @param array|string $data
+     * @param bool $usingSandbox
+     */
+    public function __construct($data, $usingSandbox = false)
     {
         if (!is_array($data)) {
             $data = $this->extractDataFromRawPostDataString($data);
         }
 
         $this->data = $data;
+        $this->usingSandbox = $usingSandbox;
     }
 
     /**
@@ -50,10 +57,12 @@ class Message implements MessageInterface
      */
     public function __toString()
     {
+        $method = ($this->usingSandbox) ? 'rawurlencode' : 'urlencode';
+
         $str = '';
 
         foreach ($this->data as $k => $v) {
-            $str .= sprintf('%s=%s&', $k, rawurlencode($v));
+            $str .= sprintf('%s=%s&', $k, $method($v));
         }
 
         return rtrim($str, '&');
@@ -66,13 +75,15 @@ class Message implements MessageInterface
      */
     private function extractDataFromRawPostDataString($rawPostDataString)
     {
+        $method = ($this->usingSandbox) ? 'rawurldecode' : 'urldecode';
+
         $data = [];
         $keyValuePairs = preg_split('/&/', $rawPostDataString, null, PREG_SPLIT_NO_EMPTY);
 
         foreach ($keyValuePairs as $keyValuePair) {
             list($k, $v) = explode('=', $keyValuePair);
 
-            $data[$k] = rawurldecode($v);
+            $data[$k] = $method($v);
         }
 
         return $data;

@@ -14,6 +14,11 @@ trait ModeDependentServiceEndpoint
         $this->useSandbox = true;
     }
 
+    public function isUsingSandbox()
+    {
+        return $this->useSandbox;
+    }
+
     /**
      * @return string
      */

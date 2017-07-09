@@ -6,7 +6,7 @@ use Mdb\PayPal\Ipn\Event\MessageInvalidEvent;
 use Mdb\PayPal\Ipn\Event\MessageVerifiedEvent;
 use Mdb\PayPal\Ipn\Event\MessageVerificationFailureEvent;
 
-use Mdb\PayPal\Ipn\ListenerBuilder\Guzzle\InputStreamListenerBuilder as ListenerBuilder;
+use Mdb\PayPal\Ipn\ListenerBuilder\Guzzle\SandboxAwareInputStreamListenerBuilder as ListenerBuilder;
 
 $listener = (new ListenerBuilder())->build();
 

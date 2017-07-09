@@ -3,12 +3,14 @@
 require '../../vendor/autoload.php';
 
 use Mdb\PayPal\Ipn\Event\MessageInvalidEvent;
-use Mdb\PayPal\Ipn\Event\MessageVerifiedEvent;
 use Mdb\PayPal\Ipn\Event\MessageVerificationFailureEvent;
+use Mdb\PayPal\Ipn\Event\MessageVerifiedEvent;
+use Mdb\PayPal\Ipn\ListenerBuilder\Guzzle\SandboxAwareInputStreamListenerBuilder as ListenerBuilder;
 
-use Mdb\PayPal\Ipn\ListenerBuilder\Guzzle\InputStreamListenerBuilder as ListenerBuilder;
+$listenerBuilder = new ListenerBuilder();
+$listenerBuilder->useSandbox();
 
-$listener = (new ListenerBuilder())->build();
+$listener = $listenerBuilder->build();
 
 $listener->onInvalid(function (MessageInvalidEvent $event) {
     $ipnMessage = $event->getMessage();

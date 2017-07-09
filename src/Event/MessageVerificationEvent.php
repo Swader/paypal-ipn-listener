@@ -2,26 +2,26 @@
 
 namespace Mdb\PayPal\Ipn\Event;
 
-use Mdb\PayPal\Ipn\Message;
+use Mdb\PayPal\Ipn\MessageInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class MessageVerificationEvent extends Event
 {
     /**
-     * @var Message
+     * @var MessageInterface
      */
     private $message;
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      */
-    public function __construct(Message $message)
+    public function __construct(MessageInterface $message)
     {
         $this->message = $message;
     }
 
     /**
-     * @return Message
+     * @return MessageInterface
      */
     public function getMessage()
     {

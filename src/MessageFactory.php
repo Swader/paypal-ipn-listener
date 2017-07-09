@@ -5,7 +5,7 @@ namespace Mdb\PayPal\Ipn;
 interface MessageFactory
 {
     /**
-     * @return Message
+     * @return MessageInterface
      */
     public function createMessage();
 }

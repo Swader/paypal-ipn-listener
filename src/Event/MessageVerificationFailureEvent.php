@@ -2,7 +2,7 @@
 
 namespace Mdb\PayPal\Ipn\Event;
 
-use Mdb\PayPal\Ipn\Message;
+use Mdb\PayPal\Ipn\MessageInterface;
 
 class MessageVerificationFailureEvent extends MessageVerificationEvent
 {
@@ -12,10 +12,10 @@ class MessageVerificationFailureEvent extends MessageVerificationEvent
     private $error;
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @param $error
      */
-    public function __construct(Message $message, $error)
+    public function __construct(MessageInterface $message, $error)
     {
         $this->error = $error;
 

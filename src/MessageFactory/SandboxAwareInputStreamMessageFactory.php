@@ -6,8 +6,9 @@ use Mdb\PayPal\Ipn\InputStream;
 use Mdb\PayPal\Ipn\Message;
 use Mdb\PayPal\Ipn\MessageFactory;
 use Mdb\PayPal\Ipn\MessageInterface;
+use Mdb\PayPal\Ipn\SandboxAwareMessage;
 
-class InputStreamMessageFactory implements MessageFactory
+class SandboxAwareInputStreamMessageFactory implements MessageFactory
 {
     /**
      * @var InputStream
@@ -15,11 +16,18 @@ class InputStreamMessageFactory implements MessageFactory
     private $inputStream;
 
     /**
-     * @param InputStream $inputStream
+     * @var bool
      */
-    public function __construct(InputStream $inputStream)
+    private $usingSandbox;
+
+    /**
+     * @param InputStream $inputStream
+     * @param bool $usingSanbox
+     */
+    public function __construct(InputStream $inputStream, $usingSanbox = false)
     {
         $this->inputStream = $inputStream;
+        $this->usingSandbox = $usingSanbox;
     }
 
     /**
@@ -29,6 +37,6 @@ class InputStreamMessageFactory implements MessageFactory
     {
         $streamContents = $this->inputStream->getContents();
 
-        return new Message($streamContents);
+        return new SandboxAwareMessage($streamContents, $this->usingSandbox);
     }
 }
