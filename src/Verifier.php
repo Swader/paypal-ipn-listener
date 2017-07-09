@@ -21,13 +21,13 @@ class Verifier
     }
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      *
      * @return bool
      *
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
-    public function verify(Message $message)
+    public function verify(MessageInterface $message)
     {
         $serviceResponse = $this->service->verifyIpnMessage($message);
         $serviceResponseBody = $serviceResponse->getBody();

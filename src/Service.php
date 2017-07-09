@@ -2,14 +2,16 @@
 
 namespace Mdb\PayPal\Ipn;
 
+use Mdb\PayPal\Ipn\Exception\ServiceException;
+
 interface Service
 {
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      *
      * @return ServiceResponse
      *
      * @throws ServiceException
      */
-    public function verifyIpnMessage(Message $message);
+    public function verifyIpnMessage(MessageInterface $message);
 }
