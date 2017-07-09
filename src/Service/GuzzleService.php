@@ -4,7 +4,7 @@ namespace Mdb\PayPal\Ipn\Service;
 
 use GuzzleHttp\ClientInterface;
 use Mdb\PayPal\Ipn\Exception\ServiceException;
-use Mdb\PayPal\Ipn\MessageInterface;
+use Mdb\PayPal\Ipn\MessageInterface as Message;
 use Mdb\PayPal\Ipn\Service;
 use Mdb\PayPal\Ipn\ServiceResponse;
 
