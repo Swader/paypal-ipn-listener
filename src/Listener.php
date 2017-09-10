@@ -58,10 +58,12 @@ class Listener
                 $eventName = self::IPN_INVALID_EVENT;
                 $event = new MessageInvalidEvent($message);
             }
-        } catch (\UnexpectedValueException $e) {
-            $eventName = self::IPN_VERIFICATION_FAILURE_EVENT;
-            $event = new MessageVerificationFailureEvent($message, $e->getMessage());
-        } catch (ServiceException $e) {
+        } catch (\Exception $e) {
+            
+            // Drop-dead response for failures
+            header("HTTP/1.0 500 Internal Server Error");
+            die("Verification failure - neithr VALID nor INVALID. Hoping for a retry from PayPal.");
+            
             $eventName = self::IPN_VERIFICATION_FAILURE_EVENT;
             $event = new MessageVerificationFailureEvent($message, $e->getMessage());
         }
